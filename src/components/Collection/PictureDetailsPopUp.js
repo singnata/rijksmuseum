@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 
@@ -42,9 +43,9 @@ class PictureDetailsPopUp extends React.Component {
         </div>
         <div className={classes.buttonsContainer}>
           <div className={`${classes.button} ${classes.seeMoreButton}`}>
-            <a href={picture.links.web} target="_blank" rel="noopener noreferrer">
-              See more
-            </a>
+            <Link to={`/picture/${picture.objectNumber}`} target="_blank">
+              View more details
+            </Link>
           </div>
           <div className={`${classes.button} ${classes.closeButton}`}>
             <button type="submit" onClick={() => handleClosePictureDetails()}>

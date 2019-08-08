@@ -50,7 +50,6 @@ class Pagination extends React.Component {
                     value={pageSize}
                     onChange={this.handleChange}
                     inputProps={{
-                      name: 'age',
                       id: 'page-size',
                     }}
                   >

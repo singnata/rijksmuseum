@@ -65,7 +65,7 @@ export default () => ({
       textDecoration: 'none',
       color: 'inherit',
       display: 'inline-block',
-      margin: '13px 40px',
+      padding: '13px 40px',
     },
   },
   closeButton: {

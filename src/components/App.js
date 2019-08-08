@@ -30,7 +30,16 @@ class App extends React.Component {
   };
 
   componentDidMount() {
-    this.getCollection();
+    if (this.props.match.params.objectType) {
+      this.setState(
+        {
+          queryParam: this.props.match.params.objectType,
+        },
+        () => this.getCollection()
+      );
+    } else {
+      this.getCollection();
+    }
   }
 
   handleBlurContent = (value) => {

@@ -10,6 +10,7 @@
     "@material-ui/core": "^3.9.3",
     "@material-ui/icons": "^3.0.2",
     "@material-ui/styles": "^4.2.1",
+    "abort-controller": "^3.0.0",
     "autoprefixer-stylus": "0.14.0",
     "firebase": "^5.7.0",
     "prop-types": "^15.6.0",

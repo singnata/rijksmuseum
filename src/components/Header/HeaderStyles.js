@@ -38,7 +38,7 @@ export default () => ({
     marginTop: '12px',
     '& input': {
       fontFamily: 'inherit',
-      maxWidth: '300px',
+      width: '300px',
       padding: '5px 10px',
       fontSize: '16px',
       borderRadius: '10px',
