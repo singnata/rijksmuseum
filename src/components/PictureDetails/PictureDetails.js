@@ -4,6 +4,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
 
+import { getCollectionService } from './../Services/CollectionService';
 import pictureDetailsStyles from './PictureDetailsStyles';
 
 class PictureDetails extends React.Component {
@@ -17,13 +18,7 @@ class PictureDetails extends React.Component {
     const objectNumber = this.props.match.params.objectNumber;
     const getPictureDetailsEndpoint = `https://community-rijksmuseum.p.rapidapi.com/en/collection/${objectNumber}?key=nMG7xRY4&format=json`;
 
-    fetch(getPictureDetailsEndpoint, {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': 'b48c4540ccmshee96167b8da23f3p109699jsnf8fe38cb12ae',
-      },
-    })
-      .then((response) => response.json())
+    getCollectionService(getPictureDetailsEndpoint)
       .then((picture) => {
         this.setState({
           picture,
