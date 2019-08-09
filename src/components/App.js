@@ -3,6 +3,7 @@ import { withStyles } from '@material-ui/core/styles';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
 
+import { getCollectionService } from './Services/CollectionService';
 import Header from './Header/HeaderTitle';
 import PictureList from './Collection/PictureList';
 import Search from './Header/Search';
@@ -58,13 +59,7 @@ class App extends React.Component {
       this.state.orderByParam
     }&q=${this.state.queryParam}`;
 
-    fetch(getCollectionEndpoint, {
-      method: 'GET',
-      headers: {
-        'X-RapidAPI-Key': 'b48c4540ccmshee96167b8da23f3p109699jsnf8fe38cb12ae',
-      },
-    })
-      .then((response) => response.json())
+    getCollectionService(getCollectionEndpoint)
       .then((collection) => {
         const picturesCount = collection.count > 10000 ? 10000 : collection.count;
         const pageCount = Math.round(picturesCount / this.state.pageSize);
@@ -129,10 +124,13 @@ class App extends React.Component {
 
     const blurMainContent = shouldMainContentBeBlurred ? this.props.classes.isBlurred : null;
     const isThereCollection = collection.artObjects && collection.artObjects.length !== 0 && !isLoading;
+    const mainContent = isThereCollection ? (
+      <PictureList handleBlurContent={this.handleBlurContent} pictures={collection.artObjects} />
+    ) : (
+      <div className="no-found">No art object could be found by your query</div>
+    );
 
-    if (isLoading) {
-      return <CircularProgress className={this.props.classes.progress} color="secondary" />;
-    } else if (error) {
+    if (error) {
       return <div>Sorry. There is an error {error}.</div>;
     } else {
       return (
@@ -146,11 +144,9 @@ class App extends React.Component {
             getCollectionByOrderParam={this.getCollectionByOrderParam}
             orderByParam={orderByParam}
           />
-          {isThereCollection ? (
-            <PictureList handleBlurContent={this.handleBlurContent} pictures={collection.artObjects} />
-          ) : (
-            <div className="no-found">No art object could be found by your query</div>
-          )}
+
+          {isLoading ? <CircularProgress className={this.props.classes.progress} color="secondary" /> : mainContent}
+
           <Pagination
             pageNumber={pageNumber}
             onChangePageNumber={this.onChangePageNumber}
