@@ -31,7 +31,7 @@ const theme = createMuiTheme({
 
 class Search extends React.Component {
   state = {
-    open: false,
+    isOrderByListOpened: false,
   };
 
   onChangeOrderByInput = (event) => {
@@ -40,11 +40,11 @@ class Search extends React.Component {
   };
 
   handleCloseSelect = () => {
-    this.setState({ open: false });
+    this.setState({ isOrderByListOpened: false });
   };
 
   handleOpenSelect = () => {
-    this.setState({ open: true });
+    this.setState({ isOrderByListOpened: true });
   };
 
   onChangeSearchInput = (event) => {
@@ -80,7 +80,7 @@ class Search extends React.Component {
                   Order by:
                 </InputLabel>
                 <Select
-                  open={this.state.open}
+                  open={this.state.isOrderByListOpened}
                   onClose={this.handleCloseSelect}
                   onOpen={this.handleOpenSelect}
                   value={orderByParam}

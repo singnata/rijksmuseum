@@ -40,6 +40,10 @@ class PictureDetails extends React.Component {
     const { isLoading, error, picture } = this.state;
     const { classes } = this.props;
 
+    const isThereMaterial = picture && picture.artObject.materials && picture.artObject.materials.length !== 0;
+
+    const isThereObjectType = picture && picture.artObject.objectTypes && picture.artObject.objectTypes.length !== 0;
+
     const image =
       picture && picture.artObject.hasImage ? (
         <div className={classes.pictureImageContainer}>
@@ -70,21 +74,17 @@ class PictureDetails extends React.Component {
                 {picture.artObject.principalOrFirstMaker}
               </div>
               <div className={classes.pictureInfo}>
-                <span className={classes.title}>Materials: </span>
-                {picture.artObject.materials &&
-                  picture.artObject.materials.length !== 0 &&
-                  picture.artObject.materials.map((material, index) => {
-                    return <span key={index}>{material} </span>;
-                  })}
+                {isThereMaterial && <span className={classes.title}>Materials: </span>}
+                {isThereMaterial &&
+                  picture.artObject.materials.map((material, index) => <span key={index}>{material} </span>)}
               </div>
               <div className={classes.pictureInfo}>
                 <span className={classes.title}>Dating: </span>
                 {picture.artObject.dating.presentingDate}
               </div>
               <div className={classes.pictureInfo}>
-                <span className={classes.title}>Object types: </span>
-                {picture.artObject.objectTypes &&
-                  picture.artObject.objectTypes.length !== 0 &&
+                {isThereObjectType && <span className={classes.title}>Object types: </span>}
+                {isThereObjectType &&
                   picture.artObject.objectTypes.map((objectType, index) => {
                     return (
                       <span key={index}>

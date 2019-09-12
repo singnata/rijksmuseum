@@ -11,7 +11,7 @@ import paginationStyles from './PaginationStyles';
 
 class Pagination extends React.Component {
   state = {
-    open: false,
+    isPageSizeListOpened: false,
   };
 
   handlePageClick = (data) => {
@@ -19,12 +19,12 @@ class Pagination extends React.Component {
     this.props.onChangePageNumber(selectedPage);
   };
 
-  handleClose = () => {
-    this.setState({ open: false });
+  handleCloseSelect = () => {
+    this.setState({ isPageSizeListOpened: false });
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  handleOpenSelect = () => {
+    this.setState({ isPageSizeListOpened: true });
   };
 
   handleChange = (event) => {
@@ -44,9 +44,9 @@ class Pagination extends React.Component {
                 <FormControl className={classes.formControl}>
                   <InputLabel htmlFor="page-size">Page size</InputLabel>
                   <Select
-                    open={this.state.open}
-                    onClose={this.handleClose}
-                    onOpen={this.handleOpen}
+                    open={this.state.isPageSizeListOpened}
+                    onClose={this.handleCloseSelect}
+                    onOpen={this.handleOpenSelect}
                     value={pageSize}
                     onChange={this.handleChange}
                     inputProps={{

@@ -23,47 +23,25 @@ const theme = createMuiTheme({
   },
 });
 
-class PictureList extends React.Component {
-  state = {
-    isShown: false,
-  };
-
-  showPictureDetails = () => {
-    this.setState({
-      isShown: !this.state.isShown,
-    });
-  };
-
-  render() {
-    const { classes, pictures, handleBlurContent } = this.props;
-
-    if (this.props && pictures) {
-      return (
-        <MuiThemeProvider theme={theme}>
-          <div className={classes.collectionContainer}>
-            {
-              <GridList spacing={20} cols={5} cellHeight={100}>
-                {pictures.map((picture) => {
-                  return (
-                    <GridListTile col={5} key={picture.id}>
-                      <Picture
-                        onClick={() => this.showPictureDetails}
-                        picture={picture}
-                        handleBlurContent={handleBlurContent}
-                      />
-                    </GridListTile>
-                  );
-                })}
-              </GridList>
-            }
-          </div>
-        </MuiThemeProvider>
-      );
-    } else {
-      return <div>Loading...</div>;
-    }
-  }
-}
+const PictureList = ({ classes, pictures, handleBlurContent }) => {
+  return (
+    <MuiThemeProvider theme={theme}>
+      <div className={classes.collectionContainer}>
+        {
+          <GridList spacing={20} cols={5} cellHeight={100}>
+            {pictures.map((picture) => {
+              return (
+                <GridListTile col={5} key={picture.id}>
+                  <Picture picture={picture} handleBlurContent={handleBlurContent} />
+                </GridListTile>
+              );
+            })}
+          </GridList>
+        }
+      </div>
+    </MuiThemeProvider>
+  );
+};
 
 PictureList.propTypes = {
   classes: PropTypes.object.isRequired,
