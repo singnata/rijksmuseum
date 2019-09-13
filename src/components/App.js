@@ -8,6 +8,7 @@ import Header from './Header/HeaderTitle';
 import PictureList from './Collection/PictureList';
 import Search from './Header/Search';
 import Pagination from './Pagination/Pagination';
+import CollectionContext from '../context/collection-context';
 
 const styles = () => ({
   progress: {
@@ -43,9 +44,9 @@ class App extends React.Component {
     }
   }
 
-  handleBlurContent = (value) => {
+  handleBlurContent = () => {
     this.setState({
-      shouldMainContentBeBlurred: value,
+      shouldMainContentBeBlurred: !this.state.shouldMainContentBeBlurred,
     });
   };
 
@@ -55,9 +56,7 @@ class App extends React.Component {
     });
 
     const baseUrl = 'https://community-rijksmuseum.p.rapidapi.com/en/collection?key=nMG7xRY4&format=json&';
-    const getCollectionEndpoint = `${baseUrl}ps=${this.state.pageSize}&p=${this.state.pageNumber}&s=${
-      this.state.orderByParam
-    }&q=${this.state.queryParam}`;
+    const getCollectionEndpoint = `${baseUrl}ps=${this.state.pageSize}&p=${this.state.pageNumber}&s=${this.state.orderByParam}&q=${this.state.queryParam}`;
 
     getCollectionService(getCollectionEndpoint)
       .then((collection) => {
@@ -124,8 +123,14 @@ class App extends React.Component {
 
     const blurMainContent = shouldMainContentBeBlurred ? this.props.classes.isBlurred : null;
     const isThereCollection = collection.artObjects && collection.artObjects.length !== 0 && !isLoading;
-    const mainContent = isThereCollection ? (
-      <PictureList handleBlurContent={this.handleBlurContent} pictures={collection.artObjects} />
+    const pictureList = isThereCollection ? (
+      <CollectionContext.Provider
+        value={{
+          handleBlurContent: this.handleBlurContent,
+        }}
+      >
+        <PictureList pictures={collection.artObjects} />
+      </CollectionContext.Provider>
     ) : (
       <div className="no-found">No art object could be found by your query</div>
     );
@@ -145,7 +150,7 @@ class App extends React.Component {
             orderByParam={orderByParam}
           />
 
-          {isLoading ? <CircularProgress className={this.props.classes.progress} color="secondary" /> : mainContent}
+          {isLoading ? <CircularProgress className={this.props.classes.progress} color="secondary" /> : pictureList}
 
           <Pagination
             pageNumber={pageNumber}

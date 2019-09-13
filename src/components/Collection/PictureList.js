@@ -23,7 +23,7 @@ const theme = createMuiTheme({
   },
 });
 
-const PictureList = ({ classes, pictures, handleBlurContent }) => {
+const PictureList = ({ classes, pictures }) => {
   return (
     <MuiThemeProvider theme={theme}>
       <div className={classes.collectionContainer}>
@@ -32,7 +32,7 @@ const PictureList = ({ classes, pictures, handleBlurContent }) => {
             {pictures.map((picture) => {
               return (
                 <GridListTile col={5} key={picture.id}>
-                  <Picture picture={picture} handleBlurContent={handleBlurContent} />
+                  <Picture picture={picture} />
                 </GridListTile>
               );
             })}
