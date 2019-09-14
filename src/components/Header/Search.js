@@ -135,81 +135,11 @@ const Search = ({
   );
 };
 
-/* class Search extends React.Component {
-  state = {
-    isOrderByListOpened: false,
-  };
-
-
-
-
-
-
-
-
-
-
-
-  render() {
-    const { classes, orderByParam, queryParam } = this.props;
-
-    return (
-      <div className={classes.searchContainer}>
-        <div className={classes.orderByFormContainer}>
-          <form autoComplete="off">
-            <MuiThemeProvider theme={theme}>
-              <FormControl className={classes.formControl}>
-                <InputLabel className={classes.inputLabel} htmlFor="filter">
-                  Order by:
-                </InputLabel>
-                <Select
-                  open={this.state.isOrderByListOpened}
-                  onClose={this.handleCloseSelect}
-                  onOpen={this.handleOpenSelect}
-                  value={orderByParam}
-                  onChange={this.onChangeOrderByInput}
-                  inputProps={{
-                    id: 'filter',
-                  }}
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="relevance">Relevance</MenuItem>
-                  <MenuItem value="objecttype">Object type</MenuItem>
-                  <MenuItem value="chronologic">Chronologic</MenuItem>
-                  <MenuItem value="achronologic">Achronologic</MenuItem>
-                  <MenuItem value="artist">Artist</MenuItem>
-                  <MenuItem value="artistdesc">Artist desc</MenuItem>
-                </Select>
-              </FormControl>
-            </MuiThemeProvider>
-          </form>
-        </div>
-        <div className={classes.queryParamFormContainer}>
-          <form onSubmit={(event) => this.handleSubmit(event)}>
-            <input
-              placeholder="Search keyword..."
-              onChange={(event) => this.onChangeSearchInput(event)}
-              value={queryParam}
-            />
-            <button type="button" className={classes.clearButton} onClick={(event) => this.resetSearchQueryParam(event)}>
-              <ClearIcon />
-            </button>
-            <Button className={classes.searchButton} type="submit">
-              Search
-            </Button>
-          </form>
-        </div>
-      </div>
-    );
-  }
-} */
-
 Search.propTypes = {
   classes: PropTypes.object.isRequired,
   resetSearchQueryParam: PropTypes.func,
-  getCollectionByOrderParam: PropTypes.func,
+  getCollectionOrderByParam: PropTypes.func,
+  getCollectionBySearchQueryParam: PropTypes.func,
   updateQueryParam: PropTypes.func,
   orderByParam: PropTypes.string,
   queryParam: PropTypes.string,
