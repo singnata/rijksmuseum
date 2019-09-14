@@ -1,4 +1,4 @@
-import React, { useReducer, useContext, useEffect } from 'react';
+import React, { useReducer, useContext } from 'react';
 import PropTypes from 'prop-types';
 import GridListTileBar from '@material-ui/core/GridListTileBar';
 import Popover from '@material-ui/core/Popover';
@@ -43,7 +43,7 @@ const reducer = (state, action) => {
     case 'CLOSE_POP_UP':
       return { ...state, anchorEl: null };
     default:
-      return state;
+      return initialState;
   }
 };
 

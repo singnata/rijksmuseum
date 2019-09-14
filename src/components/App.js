@@ -4,7 +4,7 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 import PropTypes from 'prop-types';
 
 import { getCollectionService } from './Services/CollectionService';
-import Header from './Header/HeaderTitle';
+import HeaderTitle from './Header/HeaderTitle';
 import PictureList from './Collection/PictureList';
 import Search from './Header/Search';
 import Pagination from './Pagination/Pagination';
@@ -92,7 +92,7 @@ class App extends React.Component {
     );
   };
 
-  resetQueryParam = () => {
+  resetSearchQueryParam = () => {
     this.setState({ queryParam: '', pageNumber: 1 }, () => this.getCollection());
   };
 
@@ -100,11 +100,11 @@ class App extends React.Component {
     this.setState({ queryParam });
   };
 
-  getCollectionByQueryParam = () => {
+  getCollectionBySearchQueryParam = () => {
     this.setState({ pageNumber: 1, pageSize: 50 }, () => this.getCollection());
   };
 
-  getCollectionByOrderParam = (orderByParam) => {
+  getCollectionOrderByParam = (orderByParam) => {
     this.setState({ orderByParam, pageNumber: 1, pageSize: 50 }, () => this.getCollection());
   };
 
@@ -140,13 +140,13 @@ class App extends React.Component {
     } else {
       return (
         <div className={blurMainContent}>
-          <Header />
+          <HeaderTitle />
           <Search
-            getCollectionByQueryParam={this.getCollectionByQueryParam}
-            resetQueryParam={this.resetQueryParam}
+            getCollectionBySearchQueryParam={this.getCollectionBySearchQueryParam}
+            resetSearchQueryParam={this.resetSearchQueryParam}
             queryParam={queryParam}
             updateQueryParam={this.updateQueryParam}
-            getCollectionByOrderParam={this.getCollectionByOrderParam}
+            getCollectionOrderByParam={this.getCollectionOrderByParam}
             orderByParam={orderByParam}
           />
 
