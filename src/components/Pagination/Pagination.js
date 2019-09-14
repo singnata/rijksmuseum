@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useReducer } from 'react';
 import ReactPaginate from 'react-paginate';
 import { withStyles } from '@material-ui/core/styles';
 import InputLabel from '@material-ui/core/InputLabel';
@@ -9,76 +9,81 @@ import PropTypes from 'prop-types';
 
 import paginationStyles from './PaginationStyles';
 
-class Pagination extends React.Component {
-  state = {
-    isPageSizeListOpened: false,
-  };
+const initialState = {
+  isPageSizeListOpened: false,
+};
 
-  handlePageClick = (data) => {
-    const selectedPage = data.selected + 1;
-    this.props.onChangePageNumber(selectedPage);
-  };
-
-  handleCloseSelect = () => {
-    this.setState({ isPageSizeListOpened: false });
-  };
-
-  handleOpenSelect = () => {
-    this.setState({ isPageSizeListOpened: true });
-  };
-
-  handleChange = (event) => {
-    event.preventDefault();
-    this.props.onChangePageSize(event.target.value);
-  };
-
-  render() {
-    const { classes, pageCount, pageNumber, pageSize } = this.props;
-
-    return (
-      <div className={classes.footerContainer}>
-        {pageCount > 1 && (
-          <React.Fragment>
-            <div className={classes.pageSizeContainer}>
-              <form autoComplete="off">
-                <FormControl className={classes.formControl}>
-                  <InputLabel htmlFor="page-size">Page size</InputLabel>
-                  <Select
-                    open={this.state.isPageSizeListOpened}
-                    onClose={this.handleCloseSelect}
-                    onOpen={this.handleOpenSelect}
-                    value={pageSize}
-                    onChange={this.handleChange}
-                    inputProps={{
-                      id: 'page-size',
-                    }}
-                  >
-                    <MenuItem value={10}>10</MenuItem>
-                    <MenuItem value={50}>50</MenuItem>
-                    <MenuItem value={100}>100</MenuItem>
-                  </Select>
-                </FormControl>
-              </form>
-            </div>
-            <ReactPaginate
-              previousLabel={'previous'}
-              nextLabel={'next'}
-              breakLabel={'...'}
-              breakClassName={'break-me'}
-              marginPagesDisplayed={2}
-              onPageChange={this.handlePageClick}
-              containerClassName={classes.paginationContainer}
-              subContainerClassName={'pages pagination'}
-              activeClassName={'active'}
-              forcePage={pageNumber - 1}
-              pageCount={pageCount}
-            />
-          </React.Fragment>
-        )}
-      </div>
-    );
+const reducer = (state, action) => {
+  switch (action.type) {
+    case 'CLOSE_PAGE_SIZE_SELECT':
+      return { ...state, isPageSizeListOpened: false };
+    case 'OPEN_PAGE_SIZE_SELECT':
+      return { ...state, isPageSizeListOpened: true };
+    default:
+      return initialState;
   }
-}
+};
+
+const Pagination = ({ classes, pageCount, pageNumber, pageSize, onChangePageSize, onChangePageNumber }) => {
+  const [state, dispatch] = useReducer(reducer, initialState);
+
+  const handleChange = (event) => {
+    event.preventDefault();
+    onChangePageSize(event.target.value);
+  };
+
+  const handlePageClick = (data) => {
+    const selectedPage = data.selected + 1;
+    onChangePageNumber(selectedPage);
+  };
+
+  return (
+    <React.Fragment>
+      {pageCount > 1 && (
+        <div className={classes.footerContainer}>
+          <div className={classes.pageSizeContainer}>
+            <form autoComplete="off">
+              <FormControl className={classes.formControl}>
+                <InputLabel htmlFor="page-size">Page size</InputLabel>
+                <Select
+                  open={state.isPageSizeListOpened}
+                  onClose={() => {
+                    dispatch({ type: 'CLOSE_PAGE_SIZE_SELECT' });
+                  }}
+                  onOpen={() => {
+                    dispatch({ type: 'OPEN_PAGE_SIZE_SELECT' });
+                  }}
+                  value={pageSize}
+                  onChange={handleChange}
+                  inputProps={{
+                    id: 'page-size',
+                  }}
+                >
+                  <MenuItem value={10}>10</MenuItem>
+                  <MenuItem value={50}>50</MenuItem>
+                  <MenuItem value={100}>100</MenuItem>
+                </Select>
+              </FormControl>
+            </form>
+          </div>
+          <ReactPaginate
+            previousLabel={'previous'}
+            nextLabel={'next'}
+            breakLabel={'...'}
+            breakClassName={'break-me'}
+            marginPagesDisplayed={2}
+            onPageChange={handlePageClick}
+            containerClassName={classes.paginationContainer}
+            subContainerClassName={'pages pagination'}
+            activeClassName={'active'}
+            forcePage={pageNumber - 1}
+            pageCount={pageCount}
+          />
+        </div>
+      )}
+    </React.Fragment>
+  );
+};
 
 Pagination.propTypes = {
   classes: PropTypes.object.isRequired,
