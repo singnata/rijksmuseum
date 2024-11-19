@@ -14,7 +14,7 @@
     "autoprefixer-stylus": "0.14.0",
     "braces": "^3.0.2",
     "eslint-utils": "^1.4.2",
-    "firebase": "^5.7.0",
+    "firebase": "^10.9.0",
     "prop-types": "^15.6.0",
     "re-base": "4.0.0",
     "react": "^16.8.6",
